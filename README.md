@@ -24,6 +24,13 @@ Check out the live application: [Syed Store Auth Flow](https://syed-store-786.ne
 - **Redux Toolkit**: For managing global state with RTK Query for API interaction.
 - **Netlify**: Hosting platform for deployment.
 
+## Acknowledgements
+
+- [Formik](https://formik.org/) for handling form validation.
+- [ShadCN UI](https://ui.shadcn.dev/) for beautiful UI components.
+- [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS framework.
+- [Redux Toolkit](https://redux-toolkit.js.org/) for managing global state.
+
 ## Installation
 
 To get started with the project, clone the repository and install the dependencies:
