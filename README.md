@@ -39,3 +39,13 @@ To get started with the project, clone the repository and install the dependenci
 git clone <repo-url>
 cd <project-directory>
 npm install
+
+
+## Installation
+
+To get started with the project, clone the repository and install the dependencies:
+
+```bash
+git clone <repo-url>
+cd <project-directory>
+npm install
