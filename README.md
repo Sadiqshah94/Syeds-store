@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# Syed Store Authentication Flow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project implements the authentication flow for Syed Store using various modern technologies including Formik for form validation and UI, ShadCN UI with Tailwind CSS for the UI design, and Redux RTK Query for state management.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live application: [Syed Store Auth Flow](https://syed-store-786.netlify.app/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Authentication Flow**: Login and Signup functionality for users.
+- **Formik**: Used for form validation and managing form state.
+- **ShadCN UI**: Provides a sleek and modern UI design.
+- **Tailwind CSS**: Utility-first CSS framework for responsive design.
+- **Redux RTK Query**: For efficient state management and API handling.
+- **Responsive Design**: The app is fully responsive and optimized for mobile and desktop views.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **React.js**: Frontend framework for building the UI.
+- **Formik**: Form handling and validation.
+- **ShadCN UI**: UI component library for quick and easy UI development.
+- **Tailwind CSS**: Styling and layout framework.
+- **Redux Toolkit**: For managing global state with RTK Query for API interaction.
+- **Netlify**: Hosting platform for deployment.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+To get started with the project, clone the repository and install the dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+```bash
+git clone <repo-url>
+cd <project-directory>
+npm install
