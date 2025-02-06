@@ -26,6 +26,14 @@ Check out the live application: [Syed Store Auth Flow](https://syed-store-786.ne
 
 ## Installation
 
+To start the development server:
+
+```bash
+npm start
+
+
+## Running Locally
+
 To get started with the project, clone the repository and install the dependencies:
 
 ```bash
@@ -34,5 +42,6 @@ cd <project-directory>
 npm install
 
 
-## Run Locally
-npm run dev
+
+
+
