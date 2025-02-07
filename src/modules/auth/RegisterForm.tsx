@@ -1,4 +1,5 @@
 import {
+  AppImages,
   Button,
   Card,
   CardContent,
@@ -13,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
   Spinner,
-  User,
   useSignUp,
 } from "./index";
 
@@ -21,13 +21,13 @@ export default function SignupForm() {
   const { CreateUser, isLoading } = useSignUp();
   const { values, errors, handleChange, touched, handleSubmit } = CreateUser;
   return (
-    <Card className="max-w-md mx-auto mt-10 p-5 shadow-lg">
-      <CardHeader>
-        <CardTitle className=" justify-center gap-2 flex items-center">
-          <User className="text-gray-500" />
-          Sign Up
-        </CardTitle>
-      </CardHeader>
+    <Card className="max-w-lg mx-auto mt-10 p-5 shadow-lg">
+      <CardHeader className=" justify-center gap-2 flex flex-col items-center">
+               <img src={AppImages.logo} className="w-20 h-20 contain"/>
+               <CardTitle className="font-bold text-2xl">
+                 Sign Up
+               </CardTitle>
+             </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
