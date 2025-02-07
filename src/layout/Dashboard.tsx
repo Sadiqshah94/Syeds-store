@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button"; // Assuming you have ShadCN's Button component
 import { useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "@/store/services/dashboard/profile";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,10 +16,14 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
+  const { data, error, isLoading } = useGetProfileQuery();
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching profile</p>;
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       <header className="flex justify-between items-center p-4 bg-gray-800 text-white shadow-md">
-        <h2 className="text-lg font-semibold">Welcome, User 👋</h2>
+        <h2 className="text-lg font-semibold">Welcome, {data?.name} 👋</h2>
         <Button onClick={handleLogout} variant="destructive">
           Logout
         </Button>
