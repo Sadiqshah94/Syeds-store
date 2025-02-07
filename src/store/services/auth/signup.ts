@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASEURL } from "./initials";
-import { SignupProps } from "@/modules/auth/hooks/interfaces/types";
+import { createApi, fetchBaseQuery,BASE_URL } from "@/store/index";
+import {SignupProps} from './index';
 
 export const registerUser = createApi({
   reducerPath: "register",
-  baseQuery: fetchBaseQuery({ baseUrl: `${BASEURL}` }),
+  baseQuery: fetchBaseQuery({  baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     createUser: builder.mutation<SignupProps, any>({
       query: (userData) => ({

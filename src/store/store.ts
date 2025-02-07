@@ -4,6 +4,7 @@ import {registerUser} from './services/auth/signup';
 import {loginuser} from './services/auth/signin';
 import { userProfile } from './services/dashboard/profile';
 
+export const BASE_URL = import.meta.env.VITE_API_URL;
 
 
 export const store = configureStore({

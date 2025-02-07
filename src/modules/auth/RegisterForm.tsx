@@ -23,11 +23,9 @@ export default function SignupForm() {
   return (
     <Card className="max-w-lg mx-auto mt-10 p-5 shadow-lg">
       <CardHeader className=" justify-center gap-2 flex flex-col items-center">
-               <img src={AppImages.logo} className="w-20 h-20 contain"/>
-               <CardTitle className="font-bold text-2xl">
-                 Sign Up
-               </CardTitle>
-             </CardHeader>
+        <img src={AppImages.logo} className="w-20 h-20 contain" />
+        <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
+      </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -100,7 +98,7 @@ export default function SignupForm() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? <Spinner/> : "Sign Up"}
+            {isLoading ? <Spinner /> : "Sign Up"}
           </Button>
           <div>
             <Label className="flex gap-2">

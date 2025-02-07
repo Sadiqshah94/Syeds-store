@@ -1,11 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASEURL } from "../auth/initials";
+import { createApi, fetchBaseQuery, BASE_URL } from "@/store/index";
 
-// Define the API for user profile with token authentication
 export const userProfile = createApi({
   reducerPath: "profile",
   baseQuery: fetchBaseQuery({
-    baseUrl: BASEURL,
+    baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
       console.log(`Access token: ${token}`);

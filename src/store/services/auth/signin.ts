@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASEURL } from "./initials";
-import { SigninProps } from "@/modules/auth/hooks/interfaces/types";
+import { createApi, fetchBaseQuery, BASE_URL } from "@/store/index";
+import { SigninProps } from "./index";
 
 export const loginuser = createApi({
   reducerPath: "login",
-  baseQuery: fetchBaseQuery({ baseUrl: `${BASEURL}` }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     LoginUser: builder.mutation<SigninProps, any>({
       query: (userData) => ({

@@ -6,15 +6,13 @@ import {
   CardTitle,
   InputField,
   Label,
-  Lock,
   NavLink,
   Spinner,
   useEffect,
   useNavigate,
   userSignIn,
-  AppImages
+  AppImages,
 } from "./index";
-
 
 export default function SignInForm() {
   const { SignInUser, isLoading, data } = userSignIn();
@@ -33,10 +31,8 @@ export default function SignInForm() {
     <div className="p-5 flex items-center justify-center min-h-screen">
       <Card className="p-5 w-full max-w-lg mx-auto shadow-lg">
         <CardHeader className=" justify-center gap-2 flex flex-col items-center">
-          <img src={AppImages.logo} className="w-20 h-20 contain"/>
-          <CardTitle className="font-bold text-2xl">
-            Sign In
-          </CardTitle>
+          <img src={AppImages.logo} className="w-20 h-20 contain" />
+          <CardTitle className="font-bold text-2xl">Sign In</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -64,7 +60,7 @@ export default function SignInForm() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? <Spinner/> : "Sign In"}
+              {isLoading ? <Spinner /> : "Sign In"}
             </Button>
             <div>
               <Label className="flex gap-2">
