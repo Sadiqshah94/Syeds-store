@@ -1,17 +1,38 @@
-import Dashboard from "@/layout/Dashboard";
-import { SignupForm, SignInForm } from "./index";
+import {
+  ProtectedRoute,
+  Navigate,
+  Dashboard,
+  Products,
+  User,
+  SignInForm,
+  SignupForm,
+  NotFound,
+} from "./index";
 
-export const routes = [
+const routes = [
   {
     path: "/",
-    component: <SignInForm />,
+    element: (isAuthenticated: any) =>
+      isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignInForm />,
   },
   {
     path: "/register",
-    component: <SignupForm />,
+    element: (isAuthenticated: any) =>
+      isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignupForm />,
   },
   {
     path: "/dashboard",
-    component: <Dashboard />,
+    element: <ProtectedRoute />,
+    children: [
+      { path: "", element: <Dashboard /> },
+      { path: "products", element: <Products /> },
+      { path: "users", element: <User /> },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ];
+
+export default routes;

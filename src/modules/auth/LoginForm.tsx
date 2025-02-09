@@ -8,25 +8,16 @@ import {
   Label,
   NavLink,
   Spinner,
-  useEffect,
-  useNavigate,
   userSignIn,
   AppImages,
+  useSelector,
+  RootState,
 } from "./index";
 
 export default function SignInForm() {
-  const { SignInUser, isLoading, data } = userSignIn();
-  console.log(data);
+  const { SignInUser } = userSignIn();
   const { values, errors, handleChange, touched, handleSubmit } = SignInUser;
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      navigate("/dashboard");
-    }
-  }, [data, navigate]);
-
+  const {loading} = useSelector((state: RootState) => state?.auth);
   return (
     <div className="p-5 flex items-center justify-center min-h-screen">
       <Card className="p-5 w-full max-w-lg mx-auto shadow-lg">
@@ -59,8 +50,10 @@ export default function SignInForm() {
                 helperText={touched.password && errors.password}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? <Spinner /> : "Sign In"}
+            <Button type="submit" className="w-full"
+             disabled={loading} 
+            >
+              {loading ? <Spinner /> : "Sign In"}
             </Button>
             <div>
               <Label className="flex gap-2">

@@ -6,10 +6,6 @@ This project implements the authentication flow for Syed Store using various mod
 
 Check out the live application: [Syed Store Auth Flow](https://syed-store-786.netlify.app/)
 
-## API
- 
-Check out Using Open Source API's: [Platzi Fake Store API](https://fakeapi.platzi.com/)
-
 ## Features
 
 - **Authentication Flow**: Login and Signup functionality for users.

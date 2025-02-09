@@ -1,23 +1,23 @@
+import { useFormik } from "formik";
 import {
   SigninInitialValues,
   SigninProps,
   SignInValidations,
-  useFormik,
-  useLoginUserMutation,
   useToast,
 } from "./index";
+import { useDispatch } from "react-redux";
+import { signInUser } from "@/store/features/auth/signInReducer";
 
-const userSignIn = () => {
+const useUserSignIn = () => {
   const { toast } = useToast();
-  const [LoginUser, { data, isLoading, error }] = useLoginUserMutation();
+  const dispatch = useDispatch();
 
   const SignInUser = useFormik<SigninProps>({
     initialValues: SigninInitialValues,
     validationSchema: SignInValidations,
-    onSubmit: async (values) => {
+    onSubmit: async(values) => {
       try {
-        const response = await LoginUser(values).unwrap();
-        localStorage.setItem("access_token", response?.access_token);
+        await dispatch(signInUser(values));
         toast({
           title: "User Sign In",
           description: "Successfully logged in!",
@@ -25,13 +25,13 @@ const userSignIn = () => {
       } catch (error: any) {
         toast({
           title: "Failed to Login",
-          description: `${error?.status} - ${error?.data?.message}`,
+          description: "Login failed. Please try again.",
         });
       }
     },
   });
 
-  return { SignInUser, isLoading, data, error };
+  return { SignInUser };
 };
 
-export default userSignIn;
+export default useUserSignIn;
