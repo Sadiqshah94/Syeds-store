@@ -1,8 +1,21 @@
-import { RootState, Route, Routes, routes, useSelector } from "./index.ts";
+import {
+  RootState,
+  Route,
+  routes,
+  Routes,
+  Toaster,
+  useSelector,
+} from "./index.ts";
+
+
+
+
+
 
 export default function App() {
   const isAuthenticated = useSelector((state: RootState) => state?.auth?.user);
   return (
+  <>
     <Routes>
       {routes.map((route, index) => (
         <Route
@@ -20,5 +33,7 @@ export default function App() {
         </Route>
       ))}
     </Routes>
+    <Toaster />
+  </>
   );
 }

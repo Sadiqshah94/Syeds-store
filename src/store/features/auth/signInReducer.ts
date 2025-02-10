@@ -1,47 +1,66 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { postReq } from "@/api/request";
 
-export const signInUser = createAsyncThunk(
+
+
+
+interface User {
+  email: string;
+  password: string;
+}
+
+interface SignInResponse {
+  access_token: string;
+  user: User;
+}
+
+interface AuthState {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+}
+
+// AsyncThunk for Sign In
+export const signInUser = createAsyncThunk<User, Record<any, unknown>, { rejectValue: string }>(
   "auth/signInUser",
-  async (credentials: any, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
     try {
-      const response: any = await postReq("auth/login", credentials);
-      console.log(response);
-      localStorage.setItem("token", response?.data?.access_token);
-      console.log("API Response:", response);
-      return response;
+      const response = await postReq<SignInResponse>("auth/login", credentials);
+      localStorage.setItem("token", response.data.access_token);
+      return response.data.user;
     } catch (error: any) {
-      console.error("Login Error:", error.response?.data || error.message);
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
   }
 );
 
+// Auth Slice
 const signInSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     loading: false,
     error: null,
-  },
+  } as AuthState,
   reducers: {
     logout: (state) => {
       state.user = null;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signInUser.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(signInUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.user = action.payload as any;
-    });
-    builder.addCase(signInUser.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload as any;
-    });
+    builder
+      .addCase(signInUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(signInUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(signInUser.rejected, (state, action: PayloadAction<string | undefined>) => {
+        state.loading = false;
+        state.error = action.payload || "Login failed";
+      });
   },
 });
 

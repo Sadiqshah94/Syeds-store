@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import apiInstance from './axios';
 import { ApiRequestConfig, ApiResponse, ApiResponseType } from './types';
 
@@ -10,9 +10,9 @@ import { ApiRequestConfig, ApiResponse, ApiResponseType } from './types';
 
  const postReq = async <T>(
   url: string,
-  data?: Record<string, unknown>,
+  data?: Record<string, unknown>
 ): Promise<ApiResponse<T>> => {
-  const response: ApiResponseType<T> = await apiInstance.post(url, data);
+  const response: AxiosResponse<T> = await apiInstance.post(url, data);
   return { data: response.data, status: response.status };
 };
 

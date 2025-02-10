@@ -1,4 +1,10 @@
+import { ChevronDownIcon } from "lucide-react";
 import {
+  AppImages,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  NavLink,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -11,24 +17,21 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { AppImages } from "@/constants/AppImages";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
-import {
-  Badge,
-  CatIcon,
-  Home,
-  LayoutDashboardIcon,
-  LucideCloudLightning,
-  ShoppingBagIcon,
-  UserIcon,
-} from "lucide-react";
-import { NavLink } from "react-router-dom";
+  sidebarItems,
+  useLocation,
+  useState,
+} from "../index";
 
 const AppSidebar = () => {
- 
   const { open } = useSidebar();
-
+  const location = useLocation();
+  const [openMenus, setOpenMenus] = useState<Record<number, boolean>>({});
+  const toggleMenu = (index: number) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
   return (
     <div>
       <Sidebar side="left" variant="sidebar" collapsible="icon">
@@ -43,61 +46,82 @@ const AppSidebar = () => {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-              <SidebarMenuItem>
-              <SidebarMenuButton>
-                      <LayoutDashboardIcon/> Dashboard
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-              <Collapsible defaultOpen className="group/collapsible">
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      <ShoppingBagIcon/> Products
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem>Add Product</SidebarMenuSubItem>
-                      <SidebarMenuSubItem>All Products</SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
-              <Collapsible defaultOpen className="group/collapsible">
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      <UserIcon/> Users
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                    <SidebarMenuSubItem>Add Users</SidebarMenuSubItem>
-                    <SidebarMenuSubItem>All Users</SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
-              <Collapsible defaultOpen className="group/collapsible">
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      <LucideCloudLightning/> Categories
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                    <SidebarMenuSubItem>Add Users</SidebarMenuSubItem>
-                    <SidebarMenuSubItem>All Users</SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
+                {sidebarItems.map((item, index) => {
+                  const isActive = item.children?.some((subItem) =>
+                    location.pathname.startsWith(subItem.path)
+                  );
+                  const isOpen = openMenus[index] || isActive;
+                  return item.children ? (
+                    <Collapsible key={index} open={isOpen}>
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuButton
+                            className={`flex items-center justify-between w-full px-4 py-2 rounded ${
+                              isActive
+                                ? "text-blue-700"
+                                : "text-gray-700 hover:bg-gray-200"
+                            }`}
+                            onClick={() => toggleMenu(index)}
+                          >
+                            <span className="flex items-center gap-2">
+                              {item.icon} {item.name}
+                            </span>
+                            <ChevronDownIcon
+                              className={`w-4 h-4 transition-transform duration-300 ${
+                                isOpen ? "rotate-180" : ""
+                              }`}
+                            />
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.children.map((subItem, subIndex) => (
+                              <SidebarMenuSubItem key={subIndex}>
+                                <NavLink
+                                  to={subItem.path}
+                                  className={({ isActive }) =>
+                                    `flex items-center gap-2 px-4 py-2 rounded ${
+                                      isActive
+                                        ? "text-blue-700"
+                                        : "text-gray-700 hover:bg-gray-200"
+                                    }`
+                                  }
+                                >
+                                  <span className="w-4 h-4 text-xl">
+                                    {subItem.icon}
+                                  </span>
+                                  {subItem.name}
+                                </NavLink>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  ) : (
+                    <SidebarMenuItem key={index}>
+                      <SidebarMenuButton asChild>
+                        <NavLink
+                          to={item.path}
+                          className={({ isActive }) =>
+                            `flex items-center gap-2 px-4 py-2 rounded ${
+                              isActive
+                                ? "bg-blue-500 text-white"
+                                : "text-gray-700 hover:bg-gray-200"
+                            }`
+                          }
+                        >
+                          {item.icon} {item.name}
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
-             
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
         {open && (
           <SidebarFooter>
             <p className="text-xs text-gray-400">

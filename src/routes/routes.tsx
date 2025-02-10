@@ -1,12 +1,15 @@
 import {
   ProtectedRoute,
   Navigate,
-  Dashboard,
-  Products,
-  User,
   SignInForm,
   SignupForm,
   NotFound,
+  Products,
+  ProductListing,
+  Users,
+  UserListing,
+  Categories,
+  CategoryListing,
 } from "./index";
 
 const routes = [
@@ -24,9 +27,16 @@ const routes = [
     path: "/dashboard",
     element: <ProtectedRoute />,
     children: [
-      { path: "", element: <Dashboard /> },
-      { path: "products", element: <Products /> },
-      { path: "users", element: <User /> },
+      {
+        path: "",
+        element: "Welcome to dashboard",
+      },
+      { path: "products/add", element: <Products /> },
+      { path: "products/all", element: <ProductListing /> },
+      { path: "users/add", element: <Users /> },
+      { path: "users/all", element: <UserListing /> },
+      { path: "categories/add", element: <Categories /> },
+      { path: "categories/all", element: <CategoryListing /> },
     ],
   },
   {
