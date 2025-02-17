@@ -8,9 +8,11 @@ import {
 import { useDispatch } from "react-redux";
 import { setLoading, setUser } from "@/store/features/authSlice";
 import { postReq } from "@/api/request";
+
 const useUserSignIn = () => {
   const dispatch = useDispatch();
   const { toast } = useToast();
+
   const SignInUser = useFormik<SigninProps>({
     initialValues: SigninInitialValues,
     validationSchema: SignInValidations,
@@ -19,7 +21,7 @@ const useUserSignIn = () => {
       try {
         const response = await postReq("/auth/login", values);
         if (response) {
-          await dispatch(setUser(values));
+          await dispatch(setUser(response.data)); 
           toast({
             title: "User Sign In",
             description: "Successfully logged in!",
@@ -30,9 +32,12 @@ const useUserSignIn = () => {
           title: "Failed to Login",
           description: error || "Login failed. Please try again.",
         });
+      } finally {
+        dispatch(setLoading(false)); 
       }
     },
   });
+
   return { SignInUser };
 };
 
