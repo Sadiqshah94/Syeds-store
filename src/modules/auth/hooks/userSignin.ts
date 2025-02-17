@@ -30,7 +30,7 @@ const useUserSignIn = () => {
       } catch (error: any) {
         toast({
           title: "Failed to Login",
-          description: error || "Login failed. Please try again.",
+          description: error.message || "Login failed. Please try again.",
         });
       } finally {
         dispatch(setLoading(false)); 
