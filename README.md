@@ -6,6 +6,9 @@ This project implements the authentication flow for Syed Store using various mod
 
 Check out the live application: [Syed Store Auth Flow](https://syed-store-786.netlify.app/)
 
+### .env (its public project every one can explore no issue)
+VITE_API_URL = https://api.escuelajs.co/api/v1/
+
 ## Features
 
 - **Authentication Flow**: Login and Signup functionality for users.
