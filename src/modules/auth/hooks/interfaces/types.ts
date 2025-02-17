@@ -4,6 +4,7 @@ export interface SignupProps {
   password: string;
   role: string;
   avatar: string | File;
+  contactNumber: string;
 }
 
 export interface SigninProps {

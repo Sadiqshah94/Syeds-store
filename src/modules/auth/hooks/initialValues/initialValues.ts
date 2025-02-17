@@ -4,7 +4,8 @@ export const SignUpInitialValues: SignupProps = {
   name: "",
   email: "",
   password: "",
-  role: "",
+  role: "customer",
+  contactNumber:'',
   avatar:"",
 };
 
