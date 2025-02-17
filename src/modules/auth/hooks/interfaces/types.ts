@@ -9,5 +9,4 @@ export interface SignupProps {
 export interface SigninProps {
   email: string;
   password: string;
-  access_token: string;
 }

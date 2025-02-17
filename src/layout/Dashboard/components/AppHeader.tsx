@@ -9,19 +9,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  logout,
+  // logout,
   SidebarTrigger,
   useDispatch,
+  // useDispatch,
   useNavigate,
 } from "../index";
+import { logout } from "@/store/features/authSlice";
+import { useToast } from "@/hooks/use-toast";
 
 const AppHeader = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.clear();
     dispatch(logout());
     navigate("/");
+    toast({
+      title: "User Sign Out",
+      description: "Successfully logged out!",
+    });
   };
   return (
     <Fragment>

@@ -1,4 +1,6 @@
 import { useDispatch } from "react-redux";
+import authReducer from "@/store/features/authSlice"; // Correct import
+
 import {
   combineReducers,
   configureStore,
@@ -6,21 +8,24 @@ import {
   persistStore,
   registerUser,
   setupListeners,
-  signInReducer,
+  // signInReducer,
   storage,
   userProfile,
 } from "./index";
+import { loginuser } from "./services/auth/signin";
 
 export const BASE_URL = import.meta.env.VITE_API_URL;
 
 const persistConfig = {
-  key: "root",
+
+  key: "auth",
   storage,
   whitelist: ["auth"],
 };
 
 const rootReducer = combineReducers({
-  auth: signInReducer,
+  auth:authReducer,
+  [loginuser.reducerPath]: registerUser.reducer,
   [registerUser.reducerPath]: registerUser.reducer,
   [userProfile.reducerPath]: userProfile.reducer,
 });

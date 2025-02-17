@@ -11,5 +11,4 @@ export const SignUpInitialValues: SignupProps = {
 export const SigninInitialValues: SigninProps = {
   email: "",
   password: "",
-  access_token: "",
 };

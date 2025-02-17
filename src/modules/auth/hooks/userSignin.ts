@@ -5,22 +5,26 @@ import {
   SignInValidations,
   useToast,
 } from "./index";
-import { signInUser } from "@/store/features/auth/signInReducer";
-import { useAppDispatch } from "@/store/store";
-
+import { useDispatch } from "react-redux";
+import { setLoading, setUser } from "@/store/features/authSlice";
+import { postReq } from "@/api/request";
 const useUserSignIn = () => {
+  const dispatch = useDispatch();
   const { toast } = useToast();
-  const dispatch = useAppDispatch();
   const SignInUser = useFormik<SigninProps>({
     initialValues: SigninInitialValues,
     validationSchema: SignInValidations,
     onSubmit: async (values: any) => {
+      dispatch(setLoading(true));
       try {
-        await dispatch(signInUser(values)).unwrap();
-        toast({
-          title: "User Sign In",
-          description: "Successfully logged in!",
-        });
+        const response = await postReq("/auth/login", values);
+        if (response) {
+          await dispatch(setUser(values));
+          toast({
+            title: "User Sign In",
+            description: "Successfully logged in!",
+          });
+        }
       } catch (error: any) {
         toast({
           title: "Failed to Login",
@@ -29,7 +33,6 @@ const useUserSignIn = () => {
       }
     },
   });
-
   return { SignInUser };
 };
 

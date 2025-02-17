@@ -7,17 +7,19 @@ import {
   InputField,
   Label,
   NavLink,
-  Spinner,
   userSignIn,
   AppImages,
   useSelector,
   RootState,
+  Spinner,
 } from "./index";
 
 export default function SignInForm() {
+ 
   const { SignInUser } = userSignIn();
   const { values, errors, handleChange, touched, handleSubmit } = SignInUser;
-  const {loading} = useSelector((state: RootState) => state?.auth);
+  const {isLoading} = useSelector((state:RootState)=>state?.auth);
+  console.log(isLoading);
   return (
     <div className="p-5 flex items-center justify-center min-h-screen">
       <Card className="p-5 w-full max-w-lg mx-auto shadow-lg">
@@ -51,9 +53,9 @@ export default function SignInForm() {
               />
             </div>
             <Button type="submit" className="w-full"
-             disabled={loading} 
+             disabled={isLoading} 
             >
-              {loading ? <Spinner /> : "Sign In"}
+              {isLoading ? <Spinner /> : "Sign In"}
             </Button>
             <div>
               <Label className="flex gap-2">

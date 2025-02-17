@@ -1,6 +1,5 @@
 import {
   ProtectedRoute,
-  Navigate,
   SignInForm,
   SignupForm,
   NotFound,
@@ -15,13 +14,11 @@ import {
 const routes = [
   {
     path: "/",
-    element: (isAuthenticated: any) =>
-      isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignInForm />,
+    element:<SignInForm/>,
   },
   {
     path: "/register",
-    element: (isAuthenticated: any) =>
-      isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignupForm />,
+    element: <SignupForm />,
   },
   {
     path: "/dashboard",

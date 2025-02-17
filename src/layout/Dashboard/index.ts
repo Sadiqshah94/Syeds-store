@@ -2,7 +2,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "./components/AppSidebar";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "@/store/features/auth/signInReducer";
+// import { logout } from "@/store/features/auth/signInReducer";
 import {
   Sidebar,
   SidebarContent,
@@ -93,7 +93,7 @@ export {
   Outlet,
   useNavigate,
   useDispatch,
-  logout,
+  // logout,
   AppSidebar,
   Avatar, AvatarFallback, AvatarImage,
 };

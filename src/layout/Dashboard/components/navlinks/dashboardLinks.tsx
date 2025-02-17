@@ -1,40 +1,38 @@
 import {
-  LayoutDashboardIcon,
-  ShoppingBagIcon,
-  PlusIcon,
-  ListIcon,
-  UserIcon,
-  UsersIcon,
-  UserPlusIcon,
-  LucideCloudLightning,
-} from "@/layout/Dashboard/index";
-
-const Icon = (Component: any) => <Component className="w-4 h-4" />;
+  LayoutDashboard,
+  ShoppingBag,
+  Plus,
+  List,
+  User,
+  Users,
+  UserPlus,
+  CloudLightning,
+} from "lucide-react";
 
 export const sidebarItems = [
-  { name: "Dashboard", icon: Icon(LayoutDashboardIcon), path: "/dashboard" },
+  { name: "Dashboard", icon: <LayoutDashboard className="w-4 h-4" />, path: "/dashboard" },
   {
     name: "Products",
-    icon: Icon(ShoppingBagIcon),
+    icon: <ShoppingBag className="w-4 h-4" />,
     children: [
-      { name: "Add Product", icon: Icon(PlusIcon), path: "/dashboard/products/add" },
-      { name: "All Products", icon: Icon(ListIcon), path: "/dashboard/products/all" },
+      { name: "Add Product", icon: <Plus className="w-4 h-4" />, path: "/dashboard/products/add" },
+      { name: "All Products", icon: <List className="w-4 h-4" />, path: "/dashboard/products/all" },
     ],
   },
   {
     name: "Users",
-    icon: Icon(UserIcon),
+    icon: <User className="w-4 h-4" />,
     children: [
-      { name: "Add User", icon: Icon(UserPlusIcon), path: "/dashboard/users/add" },
-      { name: "All Users", icon: Icon(UsersIcon), path: "/dashboard/users/all" },
+      { name: "Add User", icon: <UserPlus className="w-4 h-4" />, path: "/dashboard/users/add" },
+      { name: "All Users", icon: <Users className="w-4 h-4" />, path: "/dashboard/users/all" },
     ],
   },
   {
     name: "Categories",
-    icon: Icon(LucideCloudLightning),
+    icon: <CloudLightning className="w-4 h-4" />,
     children: [
-      { name: "Add Category", icon: Icon(PlusIcon), path: "/dashboard/categories/add" },
-      { name: "All Categories", icon: Icon(ListIcon), path: "/dashboard/categories/all" },
+      { name: "Add Category", icon: <Plus className="w-4 h-4" />, path: "/dashboard/categories/add" },
+      { name: "All Categories", icon: <List className="w-4 h-4" />, path: "/dashboard/categories/all" },
     ],
   },
 ];
