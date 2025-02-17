@@ -5,7 +5,7 @@ export const SignUpInitialValues: SignupProps = {
   email: "",
   password: "",
   role: "",
-  avatar: "",
+  avatar:"",
 };
 
 export const SigninInitialValues: SigninProps = {

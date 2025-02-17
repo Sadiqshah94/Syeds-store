@@ -3,7 +3,7 @@ export interface SignupProps {
   email: string;
   password: string;
   role: string;
-  avatar: string;
+  avatar: string | File;
 }
 
 export interface SigninProps {

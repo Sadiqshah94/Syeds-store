@@ -1,3 +1,4 @@
+import Uploader from "@/components/ui/core/UploadeFile";
 import {
   AppImages,
   Button,
@@ -87,15 +88,12 @@ export default function SignupForm() {
           </div>
 
           <div>
-            <InputField
-              type="url"
-              accept="image/*"
-              label="Avatar"
-              name="avatar"
-              onChange={handleChange}
-              error={touched.avatar && Boolean(errors.avatar)}
-              helperText={touched.avatar && errors.avatar}
-            />
+          <Uploader
+            label="Avatar"
+            name="avatar"
+            onChange={handleChange} 
+            helperText={touched.avatar && errors.avatar}
+          />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? <Spinner /> : "Sign Up"}
