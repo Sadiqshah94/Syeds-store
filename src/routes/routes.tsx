@@ -1,3 +1,4 @@
+import Dashboard from "@/layout/Dashboard";
 import {
   ProtectedRoute,
   SignInForm,
@@ -26,11 +27,11 @@ const routes = [
     children: [
       {
         path: "",
-        element: "Welcome to dashboard",
+        element: <Dashboard/>,
       },
       { path: "products/add", element: <Products /> },
       { path: "products/all", element: <ProductListing /> },
-      { path: "users/add", element: <Users /> },
+      // { path: "users/add", element: <Users /> },
       { path: "users/all", element: <UserListing /> },
       { path: "categories/add", element: <Categories /> },
       { path: "categories/all", element: <CategoryListing /> },

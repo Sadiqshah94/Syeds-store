@@ -6,11 +6,11 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFound from "@/components/ui/specific/NotFound";
-import Dashboard from "@/layout/Dashboard/Dashboard";
+import Dashboard from "@/layout/Dashboard/DashboardLayout";
 import ProductListing from "@/pages/dashboard/products/ProductListing";
 import Users from "@/pages/dashboard/user/Users";
 import UserListing from "@/pages/dashboard/user/UserListing";
-import Categories from "@/modules/Dashboard/categories/Categories";
+import Categories from "@/modules/Dashboard/categories/CategoryForm";
 import CategoryListing from "@/pages/dashboard/category/CategoryListing";
 import Products from "@/pages/dashboard/products/Products";
 

@@ -3,23 +3,26 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  capitalizeFirstLetter,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  // logout,
+  logout,
+  ProfileSkeleton,
   SidebarTrigger,
   useDispatch,
-  // useDispatch,
+  useGetProfileQuery,
   useNavigate,
+  useToast,
 } from "../index";
-import { logout } from "@/store/features/authSlice";
-import { useToast } from "@/hooks/use-toast";
 
 const AppHeader = () => {
   const navigate = useNavigate();
+  const { data, isLoading } = useGetProfileQuery();
+  console.log(data);
   const { toast } = useToast();
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -34,22 +37,36 @@ const AppHeader = () => {
     <Fragment>
       <div className="bg-gray-200 px-4 py-2 items-center mx-4 my-3 rounded-md flex justify-between">
         <div>
-        <SidebarTrigger />
+          <SidebarTrigger />
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {isLoading ? (
+          <ProfileSkeleton />
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex items-center gap-3">
+                <Avatar>
+                  <AvatarImage src={data?.avatar} />
+                  <AvatarFallback>
+                    {data?.name.slice(0, 1).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="text-left">
+                  <p className="text-md font-semibold">
+                    {capitalizeFirstLetter(data?.name)}
+                  </p>
+                  <p className="text-sm">{capitalizeFirstLetter(data?.role)}</p>
+                </div>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </Fragment>
   );

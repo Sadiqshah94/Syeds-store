@@ -1,9 +1,10 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, routes, Toaster } from "./index.ts";
+import Logo from "./components/ui/core/logo.tsx";
 
 export default function App() {
-  const { isAuthenticated } = useSelector((state:RootState) => state?.auth);
+  const { isAuthenticated } = useSelector((state: RootState) => state?.auth);
 
   const renderRoute = (route: any, index: number) => {
     if (route.path === "/") {
@@ -11,16 +12,28 @@ export default function App() {
         <Route
           key={index}
           path={route.path}
-          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : route.element}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              route.element
+            )
+          }
         />
       );
     }
-    if(route.path === "*"){
+    if (route.path === "*") {
       return (
         <Route
           key={index}
           path={route.path}
-          element={isAuthenticated ? <Navigate to="/dashboard" replace /> : route.element}
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              route.element
+            )
+          }
         />
       );
     }
@@ -35,9 +48,8 @@ export default function App() {
 
   return (
     <>
-      <Routes>
-        {routes.map((route, index) => renderRoute(route, index))}
-      </Routes>
+      {!isAuthenticated && <Logo />}
+      <Routes>{routes.map((route, index) => renderRoute(route, index))}</Routes>
       <Toaster />
     </>
   );

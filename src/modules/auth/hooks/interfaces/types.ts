@@ -11,3 +11,9 @@ export interface SigninProps {
   email: string;
   password: string;
 }
+
+export interface ResponseProps {
+  data:{
+    access_token: string
+  }
+}

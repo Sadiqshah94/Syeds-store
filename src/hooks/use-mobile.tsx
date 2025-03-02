@@ -17,3 +17,23 @@ export function useIsMobile() {
 
   return !!isMobile
 }
+
+
+
+import { useSyncExternalStore } from "react";
+
+const subscribe = (callback: () => void) => {
+  window.addEventListener("online", callback);
+  window.addEventListener("offline", callback);
+
+  return () => {
+    window.removeEventListener("online", callback);
+    window.removeEventListener("offline", callback);
+  };
+};
+
+const useNetworkStatus = () => {
+  return useSyncExternalStore(subscribe, () => navigator.onLine);
+};
+
+export default useNetworkStatus;

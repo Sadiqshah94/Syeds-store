@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+.DS_Store
+.npm/
+.yarn/
+coverage/
+logs/
+*.log
+*.lock
+
+# Editor-specific files
+.idea/
+.vscode/
+
+# OS-specific files
+Thumbs.db
+*.swp
+*.swo

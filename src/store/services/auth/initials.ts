@@ -1,1 +1,1 @@
-export const BASEURL = 'https://api.escuelajs.co/api/v1/'
+// export const BASEURL = 'https://api.escuelajs.co/api/v1/'

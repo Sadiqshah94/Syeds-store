@@ -6,7 +6,6 @@ export const userProfile = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
-      console.log(`Access token: ${token}`);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }

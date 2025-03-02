@@ -61,7 +61,7 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }
             {...getRootProps()}
           >
             <input accept="image/*" {...getInputProps()} name={name} />
-            <UploadCloud className="w-12 h-12 text-gray-500" />
+            <UploadCloud className="w-6 h-6 text-gray-500" />
             <p className="text-gray-600 mt-2">
               Drag & drop files here, or click to select
             </p>

@@ -6,8 +6,9 @@ import {
   useToast,
 } from "./index";
 import { useDispatch } from "react-redux";
-import { setLoading, setUser } from "@/store/features/authSlice";
+import { setLoading, setUser } from "@/store/features/auth/authSlice";
 import { postReq } from "@/api/request";
+import { ResponseProps } from "./interfaces/types";
 
 const useUserSignIn = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,8 @@ const useUserSignIn = () => {
     onSubmit: async (values: any) => {
       dispatch(setLoading(true));
       try {
-        const response = await postReq("/auth/login", values);
+        const response:ResponseProps = await postReq("/auth/login", values);
+        localStorage.setItem("access_token", response.data?.access_token);
         if (response) {
           await dispatch(setUser(response.data)); 
           toast({
@@ -28,9 +30,10 @@ const useUserSignIn = () => {
           });
         }
       } catch (error: any) {
+        console.log(error);
         toast({
           title: "Failed to Login",
-          description: error.message || "Login failed. Please try again.",
+          description: `${error?.response?.status} - ${error.response?.data?.message}` ||  "Login failed. Please try again"
         });
       } finally {
         dispatch(setLoading(false)); 

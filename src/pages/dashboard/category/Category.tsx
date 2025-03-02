@@ -1,7 +1,10 @@
+import CategoryForm from "@/modules/Dashboard/categories/CategoryForm"
 
 const Category = () => {
   return (
-    <div>Category</div>
+    <div>
+      <CategoryForm/>
+    </div>
   )
 }
 

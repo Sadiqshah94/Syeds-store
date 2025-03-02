@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import authReducer from "@/store/features/authSlice"; // Correct import
+import authReducer from "@/store/features/auth/authSlice";
 
 import {
   combineReducers,
@@ -13,11 +13,13 @@ import {
   userProfile,
 } from "./index";
 import { loginuser } from "./services/auth/signin";
+import { allUsers } from "./services/dashboard/user";
+import { allProducts } from "./services/dashboard/products";
+import { allCategories } from "./services/dashboard/categories";
 
 export const BASE_URL = import.meta.env.VITE_API_URL;
 
 const persistConfig = {
-
   key: "auth",
   storage,
   whitelist: ["auth"],
@@ -28,6 +30,12 @@ const rootReducer = combineReducers({
   [loginuser.reducerPath]: registerUser.reducer,
   [registerUser.reducerPath]: registerUser.reducer,
   [userProfile.reducerPath]: userProfile.reducer,
+  [allUsers.reducerPath]: allUsers.reducer,
+  [allProducts.reducerPath]: allProducts.reducer,
+  [allCategories.reducerPath]: allCategories.reducer,
+
+
+
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -39,7 +47,10 @@ export const store = configureStore({
       serializableCheck: false,
     })
       .concat(registerUser.middleware)
-      .concat(userProfile.middleware),
+      .concat(userProfile.middleware)
+      .concat(allUsers.middleware)
+      .concat(allProducts.middleware)
+      .concat(allCategories.middleware),
 });
 
 export const persistor = persistStore(store);

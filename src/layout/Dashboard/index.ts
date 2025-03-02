@@ -49,8 +49,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { sidebarItems } from "./components/navlinks/dashboardLinks";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import { logout } from "@/store/features/auth/authSlice";
+import { useToast } from "@/hooks/use-toast";
+import { useGetProfileQuery } from "@/store/services/dashboard/profile";
+import { capitalizeFirstLetter } from "@/helpers/transformationText";
+import ProfileSkeleton from "./components/ProfileSkeleton";
+
+
 
 export {
+  ProfileSkeleton,
+  logout,
+  useToast,
+  useGetProfileQuery,
+  capitalizeFirstLetter,
   useState,
   useLocation,
   PlusIcon,

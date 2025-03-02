@@ -8,7 +8,6 @@ import {
   Label,
   NavLink,
   userSignIn,
-  AppImages,
   useSelector,
   RootState,
   Spinner,
@@ -24,7 +23,6 @@ export default function SignInForm() {
     <div className="p-5 flex items-center justify-center min-h-screen">
       <Card className="p-5 w-full max-w-lg mx-auto shadow-lg">
         <CardHeader className=" justify-center gap-2 flex flex-col items-center">
-          <img src={AppImages.logo} className="w-20 h-20 contain" />
           <CardTitle className="font-bold text-2xl">Sign In</CardTitle>
         </CardHeader>
         <CardContent>

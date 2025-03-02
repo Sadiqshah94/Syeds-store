@@ -1,6 +1,5 @@
 import Uploader from "@/components/ui/core/UploadeFile";
 import {
-  AppImages,
   Button,
   Card,
   CardContent,
@@ -18,15 +17,14 @@ export default function SignupForm() {
   const { values, errors, handleChange, touched, handleSubmit } = CreateUser;
   return (
     <Card className="max-w-md mx-auto mt-10 p-3 shadow-lg">
-      <CardHeader className=" flex justify-center gap-2 flex flex-row items-center">
+      <CardHeader className="  justify-center gap-2 flex flex-row items-center">
         <CardTitle className="font-bold text-2xl">Sign Up</CardTitle>
-        <img src={AppImages.logo} className="w-20 h-20 contain" />
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             {/* <div className="flex flex-col gap-2 sm:flex-wrap sm:space-x-4"> */}
-            <div >
+            <div>
               <div className="w-full">
                 <InputField
                   label="Name"
@@ -53,7 +51,7 @@ export default function SignupForm() {
             </div>
 
             <div>
-            <div className="w-full">
+              <div className="w-full">
                 <InputField
                   label="Password"
                   name="password"
@@ -75,7 +73,6 @@ export default function SignupForm() {
                   helperText={touched.contactNumber && errors.contactNumber}
                 />
               </div>
-
             </div>
           </div>
 
