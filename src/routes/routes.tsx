@@ -6,7 +6,6 @@ import {
   NotFound,
   Products,
   ProductListing,
-  Users,
   UserListing,
   Categories,
   CategoryListing,

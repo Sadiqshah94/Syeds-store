@@ -7,10 +7,8 @@ import {
   CardHeader,
   CardTitle,
   InputField,
-  NavLink,
   Spinner,
 } from "@/modules/auth";
-import { Label } from "@radix-ui/react-label";
 
 export default function CategoryForm() {
   const { formik, isLoading } = useAddCategory();
@@ -26,7 +24,6 @@ export default function CategoryForm() {
       {/* Form */}
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name Input */}
           <div className="w-full">
             <InputField
               label="Name"
@@ -39,12 +36,11 @@ export default function CategoryForm() {
             />
           </div>
 
-          {/* Image Upload */}
           <div>
             <Uploader
               label="Image"
               name="image"
-              value={values.image} // Ensure value is controlled
+              value={values?.image} 
               onChange={handleChange}
               helperText={touched.image && errors.image}
             />
