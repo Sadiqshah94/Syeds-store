@@ -18,14 +18,17 @@ const ProductListing = () => {
  const [_,setSheetOpen] = useState(false);
   return (
     <div>
+      <div className='flex justify-end'>
        <AppDrawer title='Product'>
       <ProductForm setSheetOpen={setSheetOpen} />
       </AppDrawer>
+      </div>
       <Listing
         columns={columns}
         data={data}
         isLoading={isLoading}
         error={error}
+        isActions
       />
     </div>
   );

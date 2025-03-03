@@ -15,7 +15,7 @@ export const sidebarItems = [
     name: "Products",
     icon: <ShoppingBag className="w-4 h-4" />,
     children: [
-      { name: "Add Product", icon: <Plus className="w-4 h-4" />, path: "/dashboard/products/add" },
+      // { name: "Add Product", icon: <Plus className="w-4 h-4" />, path: "/dashboard/products/add" },
       { name: "All Products", icon: <List className="w-4 h-4" />, path: "/dashboard/products/all" },
     ],
   },
@@ -23,7 +23,7 @@ export const sidebarItems = [
     name: "Users",
     icon: <User className="w-4 h-4" />,
     children: [
-      { name: "Add User", icon: <UserPlus className="w-4 h-4" />, path: "/dashboard/users/add" },
+      // { name: "Add User", icon: <UserPlus className="w-4 h-4" />, path: "/dashboard/users/add" },
       { name: "All Users", icon: <Users className="w-4 h-4" />, path: "/dashboard/users/all" },
     ],
   },
@@ -31,7 +31,7 @@ export const sidebarItems = [
     name: "Categories",
     icon: <CloudLightning className="w-4 h-4" />,
     children: [
-      { name: "Add Category", icon: <Plus className="w-4 h-4" />, path: "/dashboard/categories/add" },
+      // { name: "Add Category", icon: <Plus className="w-4 h-4" />, path: "/dashboard/categories/add" },
       { name: "All Categories", icon: <List className="w-4 h-4" />, path: "/dashboard/categories/all" },
     ],
   },

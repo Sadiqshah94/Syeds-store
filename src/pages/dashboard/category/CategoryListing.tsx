@@ -14,9 +14,11 @@ const CategoryListing = () => {
   const [_,setSheetOpen] = useState(false);
   return (
     <div>
+      <div className='flex justify-end'>
       <AppDrawer title='Category'>
       <CategoryForm setSheetOpen={setSheetOpen} />
       </AppDrawer>
+      </div>
       <Listing
       columns={columns}
       data={data}

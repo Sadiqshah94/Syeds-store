@@ -132,10 +132,6 @@ const AppTable = ({
                 {isActions && (
                   <TableCell className="text-right">
                     <div className="flex gap-2 justify-end">
-                      <Button size="icon" className="bg-green-400 h-8 w-8">
-                        {" "}
-                        <PlusIcon className="h-4 w-4" />{" "}
-                      </Button>
                       <Button size="icon" variant="destructive" className="h-8 w-8">
                         {" "}
                         <Trash className="h-4 w-4" />{" "}

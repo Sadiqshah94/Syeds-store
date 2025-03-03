@@ -28,6 +28,7 @@ const Listing = ({isLoading,data,error,columns}:any) => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+        isActions
       />
       {error && <p>Error: {error}</p>}
     </div>

@@ -103,6 +103,7 @@ export default function ProductForm({
         multiple="true"
         onChange={handleChange}
         helperText={touched.images && errors.images}
+        mul
       />
 
       {/* Submit Button */}

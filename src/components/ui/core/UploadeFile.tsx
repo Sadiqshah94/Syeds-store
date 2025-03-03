@@ -6,30 +6,25 @@ import { Label } from "../label";
 interface UploaderProps {
   label: string;
   name: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: { target: { name: string; value: File | null } }) => void;
   helperText?: string | boolean;
 }
 
 const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }) => {
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleImageRemove = (index: number) => {
-    const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
-    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
+  const handleImageRemove = () => {
+    setImagePreview(null);
+    setSelectedFile(null);
 
-    setImagePreviews(updatedPreviews);
-    setSelectedFiles(updatedFiles);
-
-    const event = {
+    onChange({
       target: {
         name,
-        value: updatedFiles,
+        value: null,
       },
-    } as React.ChangeEvent<HTMLInputElement>;
-
-    onChange(event);
+    });
   };
 
   return (
@@ -37,31 +32,27 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }
       onDrop={(acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
           const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+          const file = acceptedFiles[0];
 
-          const filteredFiles = acceptedFiles.filter((file) => validImageTypes.includes(file.type));
-          if (filteredFiles.length === 0) {
-            setErrorMessage("Please upload valid image files (JPG, PNG).");
+          if (!validImageTypes.includes(file.type)) {
+            setErrorMessage("Please upload a valid image file (JPG, PNG). ");
             return;
           }
 
           setErrorMessage(null);
+          const previewUrl = URL.createObjectURL(file);
+          setImagePreview(previewUrl);
+          setSelectedFile(file);
 
-          const previewUrls = filteredFiles.map((file) => URL.createObjectURL(file));
-
-          setImagePreviews((prev) => [...prev, ...previewUrls]);
-          setSelectedFiles((prev) => [...prev, ...filteredFiles]);
-
-          const event = {
+          onChange({
             target: {
               name,
-              value: [...selectedFiles, ...filteredFiles], // Include previous files
+              value: file,
             },
-          } as React.ChangeEvent<HTMLInputElement>;
-
-          onChange(event);
+          });
         }
       }}
-      multiple // Allow multiple file selection
+      multiple={false}
     >
       {({ getRootProps, getInputProps }) => (
         <section>
@@ -70,35 +61,25 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }
             className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-all"
             {...getRootProps()}
           >
-            <input accept="image/*" {...getInputProps()} name={name} multiple />
+            <input accept="image/*" {...getInputProps()} name={name} />
             <UploadCloud className="w-6 h-6 text-gray-500" />
-            <p className="text-gray-600 mt-2">
-              Drag & drop files here, or click to select
-            </p>
+            <p className="text-gray-600 mt-2">Drag & drop an image here, or click to select</p>
           </div>
 
           {helperText && <p className="text-sm text-red-500 mt-2">{helperText}</p>}
           {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
 
-          {/* Display Multiple Image Previews */}
-          {imagePreviews.length > 0 && (
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {imagePreviews.map((preview, index) => (
-                <div key={index} className="relative bg-white shadow-lg rounded-lg p-2">
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-lg"
-                  />
-                  {/* Remove Image Button */}
-                  <button
-                    onClick={() => handleImageRemove(index)}
-                    className="absolute top-1 right-1 bg-gray-700 text-white rounded-full p-1 hover:bg-gray-900 transition-all"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
+          {/* Display Single Image Preview */}
+          {imagePreview && (
+            <div className="mt-4 relative bg-white shadow-lg rounded-lg p-2 w-32 h-32">
+              <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded-lg" />
+              {/* Remove Image Button */}
+              <button
+                onClick={handleImageRemove}
+                className="absolute top-1 right-1 bg-gray-700 text-white rounded-full p-1 hover:bg-gray-900 transition-all"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
           )}
         </section>
