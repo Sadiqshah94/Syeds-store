@@ -15,21 +15,20 @@ interface UseAddCategoryProps {
 const useAddCategory = ({ setSheetOpen }: UseAddCategoryProps) => {
   const { toast } = useToast();
   const [addCategory, { isLoading }] = useAddCategoryMutation();
+  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET
+  const cloud_name = import.meta.env.VITE_CLOUD_NAME
+
 
   const uploadImage = async (file: File) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const response = await axios.post(
-        "https://api.escuelajs.co/api/v1/files/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      return response.data.location;
+    formData.append("upload_preset", upload_preset);
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, 
+      formData
+    );
+      return response.data.secure_url;
     } catch (error) {
       toast({
         title: "Image upload failed",

@@ -1,6 +1,5 @@
 import AppDrawer from "@/components/ui/core/AppDrawer";
 import Listing from "@/components/ui/core/Listing";
-import CategoryForm from "@/modules/Dashboard/categories/CategoryForm";
 import ProductForm from "@/modules/Dashboard/products/ProductForm";
 import { useGetAllProductsQuery } from "@/store/services/dashboard/products";
 import { useState } from "react";

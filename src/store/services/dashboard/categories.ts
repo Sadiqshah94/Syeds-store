@@ -18,8 +18,14 @@ export const allCategories = createApi({
         body: category,
       }),
     }),
+    deleteCategory:builder.mutation<any,{values:any}>({
+      query: (categoryId) => ({
+        url: `/categories/${categoryId}`,
+        method: "DELETE",
+      }),
+    })
   }),
   
 });
 
-export const { useGetAllCategoriesQuery,useAddCategoryMutation } = allCategories;
+export const { useGetAllCategoriesQuery,useAddCategoryMutation,useDeleteCategoryMutation } = allCategories;

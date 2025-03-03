@@ -18,7 +18,6 @@ export default function ProductForm({
   const { values, errors, handleChange, touched, handleSubmit, setFieldValue } =
     formik;
 
-  // Fetch categories from API
   console.log(values, errors);
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery();
@@ -29,7 +28,6 @@ export default function ProductForm({
         <CardTitle className="font-bold text-2xl">Add Product</CardTitle>
       </CardHeader>
 
-      {/* Product Title */}
       <InputField
         label="Title"
         name="title"
@@ -40,7 +38,6 @@ export default function ProductForm({
         helperText={touched.title && errors.title}
       />
 
-      {/* Price */}
       <InputField
         label="Price"
         name="price"
@@ -51,7 +48,6 @@ export default function ProductForm({
         helperText={touched.price && errors.price}
       />
 
-      {/* Description */}
       <InputField
         label="Description"
         name="description"
@@ -62,7 +58,6 @@ export default function ProductForm({
         helperText={touched.description && errors.description}
       />
 
-      {/* Category Dropdown */}
       <div className="w-full">
         <label className="block text-sm font-medium text-gray-700">
           Category
@@ -89,17 +84,14 @@ export default function ProductForm({
         )}
       </div>
 
-      {/* Product Images */}
       <Uploader
         label="Product Images"
         name="images"
         value={values?.images}
-        multiple="true"
+        multiple
         onChange={handleChange}
-        helperText={touched.images && errors.images}
+        helperText={touched.images && Boolean(errors.images)}
       />
-
-      {/* Submit Button */}
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? <Spinner /> : "Add Product"}
       </Button>
