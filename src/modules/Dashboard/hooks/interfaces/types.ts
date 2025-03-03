@@ -4,14 +4,9 @@ export interface CategoryProps {
 }
 
 export interface ProductProps {
-  id: number;
   title: string;
   price: number;
   description: string;
-  category: {
-    id: number | null;
-    name: string;
-    image: string | File;
-  };
+  categoryId:number;
   images: string[] | File[];
 }

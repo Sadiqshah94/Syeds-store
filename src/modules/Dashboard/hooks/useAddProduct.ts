@@ -1,8 +1,5 @@
 import { useFormik } from "formik";
-import {
-  axios,
-  useToast,
-} from "./index";
+import { axios, useToast } from "./index";
 import { useAddProductMutation } from "@/store/services/dashboard/products";
 import { ProductInitialValues } from "./initialValues/initialValues";
 import { ProductProps } from "./interfaces/types";
@@ -16,7 +13,7 @@ const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
   const { toast } = useToast();
   const [addProduct, { isLoading }] = useAddProductMutation();
 
-  // Upload Image Function
+  // ✅ Upload Image Function
   const uploadImage = async (file: File) => {
     try {
       const formData = new FormData();
@@ -24,9 +21,7 @@ const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
       const response = await axios.post(
         "https://api.escuelajs.co/api/v1/files/upload",
         formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
       return response.data.location;
     } catch (error) {
@@ -35,34 +30,32 @@ const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
     }
   };
 
-  // Formik setup
+  // ✅ Formik setup
   const formik = useFormik<ProductProps>({
     initialValues: ProductInitialValues,
     validationSchema: ProductValidation,
-    onSubmit: async (values: any) => {
+    onSubmit: async (values) => {
       try {
-        // Handle product images upload
+        console.log(values.categoryId);
+
+        const productData: any = {
+          ...values,
+          categoryId: Number(values.categoryId || 60), 
+          price: Number(values.price),
+        };
+
+        // ✅ Handle Image Uploads
         if (values.images && Array.isArray(values.images)) {
-          const uploadedImages = await Promise.all(
+          productData.images = await Promise.all(
             values.images.map(async (file: File) => {
-              if (file instanceof File) {
-                return await uploadImage(file);
-              }
-              return file;
+              return file instanceof File ? await uploadImage(file) : file;
             })
           );
-          values.images = uploadedImages;
         }
 
-        if (values.category.image && values.category.image instanceof File) {
-          values.category.image = await uploadImage(values.category.image);
-        }
-
-        await addProduct(values).unwrap();
+        await addProduct(productData).unwrap();
         setSheetOpen(false);
-
         toast({ title: "Product Added" });
-
       } catch (error: any) {
         toast({
           title: "Failed to Register Product",

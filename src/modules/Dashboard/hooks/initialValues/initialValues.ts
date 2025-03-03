@@ -12,15 +12,10 @@ export const CategoryInitialValues: CategoryProps = {
 import { ProductProps } from "../interfaces/types";
 
 export const ProductInitialValues: ProductProps = {
-  id: Number(uuidv4()), 
-  title: "",
-  price: 0,
-  description: "",
-  category: {
-    id: null,
-    name: "",
-    image: "",
-  },
+  title:"",
+  description:"",
+  price:0,
+  categoryId:0,
   images: [],
 };
 

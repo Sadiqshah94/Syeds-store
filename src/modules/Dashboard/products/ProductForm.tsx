@@ -19,7 +19,7 @@ export default function ProductForm({
     formik;
 
   // Fetch categories from API
-  console.log(values,errors)
+  console.log(values, errors);
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery();
 
@@ -69,13 +69,8 @@ export default function ProductForm({
         </label>
         <select
           name="category.id"
-          value={values.category?.id || ""}
-          onChange={(e) => {
-            const selectedCategory = categories?.find(
-              (cat: any) => cat.id === Number(e.target.value)
-            );
-            setFieldValue("category", selectedCategory || {});
-          }}
+          value={values.categoryId || ""}
+          onChange={(e) => setFieldValue("categoryId", Number(e.target.value))}
           className="block w-full p-2 mt-1 border rounded-md"
         >
           <option value="">Select a category</option>
@@ -83,17 +78,16 @@ export default function ProductForm({
             <option disabled>Loading...</option>
           ) : (
             categories?.map((category: any) => (
-              <option key={category.id} value={category.id}>
+              <option key={category?.id} value={category?.id}>
                 {category.name}
               </option>
             ))
           )}
         </select>
-        {touched.category?.id && errors.category?.id && (
-          <p className="text-red-500 text-sm">{errors.category?.id}</p>
+        {touched.categoryId && Boolean(errors.categoryId) && (
+          <p className="text-red-500 text-sm">{errors.categoryId}</p>
         )}
       </div>
-
 
       {/* Product Images */}
       <Uploader
@@ -103,7 +97,6 @@ export default function ProductForm({
         multiple="true"
         onChange={handleChange}
         helperText={touched.images && errors.images}
-        mul
       />
 
       {/* Submit Button */}
