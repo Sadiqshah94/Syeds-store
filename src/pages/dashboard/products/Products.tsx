@@ -1,5 +1,7 @@
+import ProductForm from "@/modules/Dashboard/products/ProductForm";
+
 const Products = () => {
-  return <div>Products</div>;
+  return <div><ProductForm/></div>;
 };
 
 export default Products;

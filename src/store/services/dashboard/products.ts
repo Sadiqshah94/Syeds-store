@@ -11,8 +11,15 @@ export const allProducts = createApi({
         url: "/products",
       }),
     }),
+    addProduct: builder.mutation<any, { values: any }>({
+      query: (product) => ({
+        url: "/products",
+        method: "POST",
+        body: product,
+      }),
+    }),
   }),
 });
 
 // Export the hook
-export const { useGetAllProductsQuery } = allProducts;
+export const { useGetAllProductsQuery,useAddProductMutation } = allProducts;

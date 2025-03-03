@@ -11,15 +11,21 @@ interface UploaderProps {
 }
 
 const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }) => {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleImageRemove = () => {
-    setImagePreview(null);
+  const handleImageRemove = (index: number) => {
+    const updatedPreviews = imagePreviews.filter((_, i) => i !== index);
+    const updatedFiles = selectedFiles.filter((_, i) => i !== index);
+
+    setImagePreviews(updatedPreviews);
+    setSelectedFiles(updatedFiles);
+
     const event = {
       target: {
         name,
-        value: "",
+        value: updatedFiles,
       },
     } as React.ChangeEvent<HTMLInputElement>;
 
@@ -28,39 +34,43 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }
 
   return (
     <Dropzone
-      onDrop={(acceptedFiles: any) => {
+      onDrop={(acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
-          const file = acceptedFiles[0];
-
           const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
-          if (!validImageTypes.includes(file.type)) {
-            setErrorMessage("Please upload a valid image file (JPG, PNG).");
+
+          const filteredFiles = acceptedFiles.filter((file) => validImageTypes.includes(file.type));
+          if (filteredFiles.length === 0) {
+            setErrorMessage("Please upload valid image files (JPG, PNG).");
             return;
-          } else {
-            setErrorMessage(null);
           }
 
-          setImagePreview(URL.createObjectURL(file));
+          setErrorMessage(null);
+
+          const previewUrls = filteredFiles.map((file) => URL.createObjectURL(file));
+
+          setImagePreviews((prev) => [...prev, ...previewUrls]);
+          setSelectedFiles((prev) => [...prev, ...filteredFiles]);
 
           const event = {
             target: {
               name,
-              value: file,
+              value: [...selectedFiles, ...filteredFiles], // Include previous files
             },
           } as React.ChangeEvent<HTMLInputElement>;
 
           onChange(event);
         }
       }}
+      multiple // Allow multiple file selection
     >
-      {({ getRootProps, getInputProps }: any) => (
+      {({ getRootProps, getInputProps }) => (
         <section>
           <Label>{label}</Label>
           <div
             className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-all"
             {...getRootProps()}
           >
-            <input accept="image/*" {...getInputProps()} name={name} />
+            <input accept="image/*" {...getInputProps()} name={name} multiple />
             <UploadCloud className="w-6 h-6 text-gray-500" />
             <p className="text-gray-600 mt-2">
               Drag & drop files here, or click to select
@@ -68,26 +78,27 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText }
           </div>
 
           {helperText && <p className="text-sm text-red-500 mt-2">{helperText}</p>}
-          {errorMessage && (
-            <p className="text-sm text-red-500 mt-2">{errorMessage}</p>
-          )}
-          {imagePreview && (
-            <div className="mt-4 relative max-w-xs mx-auto bg-white shadow-lg rounded-lg p-4">
-              <p className="text-gray-600">Uploaded Image:</p>
-              <div className="relative">
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="mt-2 w-full h-32 object-cover rounded-lg"
-                />
-                {/* Close Button */}
-                <button
-                  onClick={handleImageRemove}
-                  className="absolute top-2 right-2 bg-gray-700 text-white rounded-full p-2 hover:bg-gray-900 transition-all"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
+          {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
+
+          {/* Display Multiple Image Previews */}
+          {imagePreviews.length > 0 && (
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="relative bg-white shadow-lg rounded-lg p-2">
+                  <img
+                    src={preview}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-32 object-cover rounded-lg"
+                  />
+                  {/* Remove Image Button */}
+                  <button
+                    onClick={() => handleImageRemove(index)}
+                    className="absolute top-1 right-1 bg-gray-700 text-white rounded-full p-1 hover:bg-gray-900 transition-all"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </section>

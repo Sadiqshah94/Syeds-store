@@ -55,10 +55,10 @@ interface StatisticsItem {
 }
 
 const StatisticsData: StatisticsItem[] = [
-  { key: "products", icon: <Package size={24} />, description: "Total Products", title: "Products" },
-  { key: "categories", icon: <Users size={24} />, description: "Total Categories", title: "Categories" },
-  { key: "users",  icon: <ShoppingCart size={24} />, description: "Total Users", title: "Users" },
-  {key:"profit", icon: <Users size={24} />, description:"Totalprofit", title: "Profits"},
+  { key: "products", icon: <Package size={60} style={{color:"gray", opacity:"0.2",}} />, description: "Total Products", title: "Products" },
+  { key: "categories", icon: <Users size={60} style={{color:"gray", opacity:"0.2",}} />, description: "Total Categories", title: "Categories" },
+  { key: "users",  icon: <ShoppingCart size={60} style={{color:"gray", opacity:"0.2",}} />, description: "Total Users", title: "Users" },
+  {key:"profit", icon: <Users size={60} style={{color:"gray", opacity:"0.2",}} />, description:"Totalprofit", title: "Profits"},
 
 ];
 // icon: <Hourglass size={24} />,

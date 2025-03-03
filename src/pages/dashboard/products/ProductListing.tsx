@@ -1,5 +1,9 @@
+import AppDrawer from "@/components/ui/core/AppDrawer";
 import Listing from "@/components/ui/core/Listing";
+import CategoryForm from "@/modules/Dashboard/categories/CategoryForm";
+import ProductForm from "@/modules/Dashboard/products/ProductForm";
 import { useGetAllProductsQuery } from "@/store/services/dashboard/products";
+import { useState } from "react";
 
 const ProductListing = () => {
   const { data, isLoading, error } = useGetAllProductsQuery();
@@ -11,9 +15,12 @@ const ProductListing = () => {
     { label: "Category Name", className: "w-[200px]" },
     { label: "price", className: "w-2" },
   ];
-
+ const [_,setSheetOpen] = useState(false);
   return (
     <div>
+       <AppDrawer title='Product'>
+      <ProductForm setSheetOpen={setSheetOpen} />
+      </AppDrawer>
       <Listing
         columns={columns}
         data={data}

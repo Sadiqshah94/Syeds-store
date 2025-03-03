@@ -8,21 +8,27 @@ import {
   useToast,
 } from "./index";
 
+interface UseAddCategoryProps {
+  setSheetOpen: (open: boolean) => void;
+}
 
-const useAddCategory = () => {
+const useAddCategory = ({ setSheetOpen }: UseAddCategoryProps) => {
   const { toast } = useToast();
   const [addCategory, { isLoading }] = useAddCategoryMutation();
-
 
   const uploadImage = async (file: File) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const response = await axios.post("https://api.escuelajs.co/api/v1/files/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "https://api.escuelajs.co/api/v1/files/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return response.data.location;
     } catch (error) {
       toast({
@@ -32,20 +38,23 @@ const useAddCategory = () => {
     }
   };
 
-
   const formik = useFormik<CategoryProps>({
     initialValues: CategoryInitialValues,
     validationSchema: CategoryValidation,
-    onSubmit: async (values:any) => {
+    onSubmit: async (values: any) => {
       try {
         if (values.image && values.image instanceof File) {
           const imageLocation = await uploadImage(values.image);
           values.image = imageLocation;
         }
         await addCategory(values).unwrap();
+        setSheetOpen(false);
+       
         toast({
-          title: "User Registered Successfully",
+          title: "Category Added",
         });
+
+       
       } catch (error: any) {
         toast({
           title: "Failed to Register",
@@ -55,7 +64,7 @@ const useAddCategory = () => {
     },
   });
 
-  return { formik,isLoading };
+  return { formik, isLoading };
 };
 
 export default useAddCategory;
