@@ -12,18 +12,18 @@ interface UseAddProductProps {
 const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
   const { toast } = useToast();
   const [addProduct, { isLoading }] = useAddProductMutation();
-  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET
-  const cloud_name = import.meta.env.VITE_CLOUD_NAME
+  const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
+  const cloud_name = import.meta.env.VITE_CLOUD_NAME;
 
   const uploadImage = async (file: File) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", upload_preset);
-    const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, 
-      formData
-    );
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+        formData
+      );
       return response.data.secure_url;
     } catch (error) {
       toast({ title: "Image upload failed" });
@@ -31,7 +31,6 @@ const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
     }
   };
 
-  // ✅ Formik setup
   const formik = useFormik<ProductProps>({
     initialValues: ProductInitialValues,
     validationSchema: ProductValidation,
@@ -41,14 +40,13 @@ const useAddProduct = ({ setSheetOpen }: UseAddProductProps) => {
 
         const productData: any = {
           ...values,
-          categoryId: Number(values.categoryId || 60), 
+          categoryId: Number(values.categoryId || 60),
           price: Number(values.price),
         };
 
-        // ✅ Handle Image Uploads
         if (values.images && Array.isArray(values.images)) {
           productData.images = await Promise.all(
-            values.images.map(async (file: File) => {
+            values.images.map(async (file: any) => {
               return file instanceof File ? await uploadImage(file) : file;
             })
           );

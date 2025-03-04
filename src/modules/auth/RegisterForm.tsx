@@ -81,7 +81,7 @@ export default function SignupForm() {
               label="Avatar"
               name="avatar"
               onChange={handleChange}
-              helperText={touched.avatar && errors.avatar}
+              // helperText={touched.avatar && errors.avatar}
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>

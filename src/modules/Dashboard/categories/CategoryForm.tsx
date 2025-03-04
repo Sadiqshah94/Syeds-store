@@ -35,8 +35,8 @@ export default function CategoryForm({
       <div>
         <Uploader
           label="Image"
-          name="image"
-          value={values?.image}
+          name="image" 
+          value={values.image || null} 
           onChange={handleChange}
           helperText={touched.image && errors.image}
         />

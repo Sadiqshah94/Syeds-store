@@ -4,10 +4,8 @@ import {
   SignInForm,
   SignupForm,
   NotFound,
-  Products,
   ProductListing,
   UserListing,
-  Categories,
   CategoryListing,
 } from "./index";
 
@@ -28,11 +26,9 @@ const routes = [
         path: "",
         element: <Dashboard/>,
       },
-      { path: "products/add", element: <Products /> },
       { path: "products/all", element: <ProductListing /> },
       // { path: "users/add", element: <Users /> },
       { path: "users/all", element: <UserListing /> },
-      { path: "categories/add", element: <Categories /> },
       { path: "categories/all", element: <CategoryListing /> },
     ],
   },

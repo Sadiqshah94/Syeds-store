@@ -6,8 +6,9 @@ import { Label } from "../label";
 interface UploaderProps {
   label: string;
   name: string;
-  onChange: (event: { target: { name: string; value: File | File[] | null } }) => void;
-  helperText?: string | boolean;
+  value?: File | File[] | string | string[] | null; // Support both string & File
+  onChange: (event: { target: { name: string; value: File | File[] | string | null } }) => void;
+  helperText?: any;
   multiple?: boolean;
 }
 
@@ -38,7 +39,7 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText, 
         const filteredFiles = acceptedFiles.filter(file => validImageTypes.includes(file.type));
 
         if (filteredFiles.length === 0) {
-          setErrorMessage("Please upload a valid image file (JPG, PNG). ");
+          setErrorMessage("Please upload a valid image file (JPG, PNG).");
           return;
         }
 
@@ -59,12 +60,12 @@ const Uploader: React.FC<UploaderProps> = ({ label, name, onChange, helperText, 
     >
       {({ getRootProps, getInputProps }) => (
         <section>
-          <Label>{label}</Label>
+          <Label htmlFor={name}>{label}</Label>
           <div
             className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition-all"
             {...getRootProps()}
           >
-            <input accept="image/*" {...getInputProps()} name={name} />
+            <input accept="image/*" {...getInputProps()} name={name} id={name} />
             <UploadCloud className="w-6 h-6 text-gray-500" />
             <p className="text-gray-600 mt-2">Drag & drop an image here, or click to select</p>
           </div>

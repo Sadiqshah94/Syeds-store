@@ -1,11 +1,9 @@
 import {
   LayoutDashboard,
   ShoppingBag,
-  Plus,
   List,
   User,
   Users,
-  UserPlus,
   CloudLightning,
 } from "lucide-react";
 

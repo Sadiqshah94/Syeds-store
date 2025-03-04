@@ -1,5 +1,4 @@
 import { CategoryProps } from "../interfaces/types";
-import { v4 as uuidv4 } from "uuid";
 
 
 
@@ -16,6 +15,6 @@ export const ProductInitialValues: ProductProps = {
   description:"",
   price:0,
   categoryId:0,
-  images: [],
+  images:[],
 };
 

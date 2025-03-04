@@ -1,11 +1,15 @@
-import CategoryForm from "@/modules/Dashboard/categories/CategoryForm"
+import CategoryForm from "@/modules/Dashboard/categories/CategoryForm";
 
-const Category = () => {
+const Category = ({
+  setSheetOpen,
+}: {
+  setSheetOpen: (open: boolean) => any;
+}) => {
   return (
     <div>
-      <CategoryForm/>
+      <CategoryForm setSheetOpen={setSheetOpen} />
     </div>
-  )
-}
+  );
+};
 
-export default Category
+export default Category;

@@ -85,12 +85,12 @@ export default function ProductForm({
       </div>
 
       <Uploader
-        label="Product Images"
+        label="Images"
         name="images"
-        value={values?.images}
-        multiple
+        value={values.images || []}
         onChange={handleChange}
-        helperText={touched.images && Boolean(errors.images)}
+        helperText={touched.images && errors.images}
+        multiple
       />
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? <Spinner /> : "Add Product"}
