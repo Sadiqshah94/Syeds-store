@@ -18,6 +18,17 @@ import {
 import { PencilLine, Trash } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { DialogFooter, DialogHeader } from "../dialog";
+import { useModal } from "@/hooks/use-modal";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import Spinner from "./spinner";
 // import {
 //   Dialog,
 //   DialogClose,
@@ -42,6 +53,9 @@ interface AppTableProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  onDelete: (id: number) => void;
+  error: any;
+  deleteLoading: any;
 }
 
 const SkeletonRow = ({
@@ -74,15 +88,18 @@ const AppTable = ({
   isActions = false,
   rows,
   isLoading,
+  deleteLoading,
   currentPage,
   totalPages,
   onPageChange,
+  onDelete,
+  error,
 }: AppTableProps) => {
   if (columns.length === 0) {
     return <div>No columns defined</div>;
   }
 
-  console.log("loading....", isLoading);
+  console.log("loading....", error?.data?.message);
 
   const renderPaginationItems = () => {
     const items = [];
@@ -115,8 +132,30 @@ const AppTable = ({
     return items;
   };
 
-  const handleDelete = (id: number) => {
-    console.log("deleted id.....", id);
+  const { isOpen, open, close } = useModal();
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  const handleDeleteClick = (id: number) => {
+    setSelectedId(id);
+    open();
+  };
+  const { toast } = useToast();
+
+  const confirmDelete = async () => {
+    if (selectedId !== null) {
+      onDelete(selectedId);
+      if (error) {
+        toast({
+          title: error?.data?.message || "Failed to delete item",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Item deleted successfully",
+        });
+      }
+      close();
+    }
   };
 
   const ITEMS_PER_PAGE = 10;
@@ -172,7 +211,7 @@ const AppTable = ({
                   <TableCell className="text-right">
                     <div className="flex gap-2 justify-end">
                       <Button
-                        onClick={() => handleDelete(row.id)}
+                        onClick={() => handleDeleteClick(row.id)}
                         size="icon"
                         variant="destructive"
                         className="h-8 w-8"
@@ -231,6 +270,29 @@ const AppTable = ({
           </TableRow>
         </TableFooter>
       </Table>
+      {/* Delete Confirmation Modal */}
+      <Dialog open={isOpen} onOpenChange={close}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this item?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={close}>
+              Cancel
+            </Button>
+            <Button
+              disabled={deleteLoading}
+              variant="destructive"
+              onClick={confirmDelete}
+            >
+              {deleteLoading ? <Spinner /> : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

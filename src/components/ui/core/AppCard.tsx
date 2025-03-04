@@ -25,7 +25,7 @@ const AppCard: React.FC<CardProps> = ({
   console.log("All Data" , counters)
   return (
     <Card
-      className={`relative flex-1 max-w-sm  transition-all duration-300 ease-in-out  transform hover:scale-300`}
+      className={` relative flex-1 max-w-sm  transition-all duration-300 ease-in-out  transform hover:scale-300`}
     >
       <CardHeader className=" flex gap-2  pb-2">
         {icon && (

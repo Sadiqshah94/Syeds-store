@@ -5,11 +5,13 @@ export const allProducts = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
   }),
+  tagTypes: ["Products"],
   endpoints: (builder) => ({
     getAllProducts: builder.query<any, void>({
       query: () => ({
         url: "/products",
       }),
+      providesTags: ["Products"],
     }),
     addProduct: builder.mutation<any, { values: any }>({
       query: (product) => ({
@@ -17,9 +19,54 @@ export const allProducts = createApi({
         method: "POST",
         body: product,
       }),
+      async onQueryStarted(product, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          allProducts.util.updateQueryData(
+            "getAllProducts",
+            undefined,
+            (draft) => {
+              draft.push(product);
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["Products"],
+    }),
+    deleteProduct: builder.mutation<any, { values: any }>({
+      query: (productId) => ({
+        url: `/products/${productId}`,
+        method: "DELETE",
+      }),
+      async onQueryStarted(productId, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          allProducts.util.updateQueryData(
+            "getAllProducts",
+            undefined,
+            (draft) => {
+              return draft.filter((product: any) => product.id !== productId);
+            }
+          )
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["Products"],
     }),
   }),
 });
 
-// Export the hook
-export const { useGetAllProductsQuery,useAddProductMutation } = allProducts;
+export const {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+  useAddProductMutation,
+} = allProducts;

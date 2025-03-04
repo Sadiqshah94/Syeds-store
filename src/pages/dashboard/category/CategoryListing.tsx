@@ -5,13 +5,13 @@ import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from '@/store/ser
 import { useState } from 'react';
 
 const CategoryListing = () => {
-  const {data,isLoading,error} =useGetAllCategoriesQuery();
+  const {data,isLoading} =useGetAllCategoriesQuery();
     const columns = [
       { label: "id", className: "w-[80px]" },
       { label: "image", className: "w-[200px]" },
     { label: "name", className: "w-[200px]" },
   ]
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteCategory, { isLoading: deleteLoading, error: deleteError }] = useDeleteCategoryMutation();
   const [_,setSheetOpen] = useState(false);
   return (
     <div>
@@ -24,8 +24,9 @@ const CategoryListing = () => {
       columns={columns}
       data={data}
       isLoading={isLoading}
-      error={error}
-      deleteCategory={deleteCategory}
+      onDelete={deleteCategory}
+      deleteLoading={deleteLoading}
+      error={deleteError}
       />
     </div>
   )
