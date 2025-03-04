@@ -4,7 +4,7 @@ import { useState } from "react"
 import AppTable from "@/components/ui/core/AppTable"
 const ITEMS_PER_PAGE = 8
 
-const Listing = ({isLoading,data,columns,onDelete,error,deleteLoading}:any) => {
+const Listing = ({isLoading,data,columns,onDelete,error,deleteLoading,isEditAction}:any) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const handlePageChange = (page: number) => {
@@ -35,6 +35,7 @@ const Listing = ({isLoading,data,columns,onDelete,error,deleteLoading}:any) => {
         onDelete={onDelete}
         error={error}
         deleteLoading={deleteLoading}
+        isEditAction={isEditAction}
       />
     </div>
   )

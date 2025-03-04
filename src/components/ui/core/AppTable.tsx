@@ -56,6 +56,7 @@ interface AppTableProps {
   onDelete: (id: number) => void;
   error: any;
   deleteLoading: any;
+  isEditAction?:boolean;
 }
 
 const SkeletonRow = ({
@@ -91,6 +92,7 @@ const AppTable = ({
   deleteLoading,
   currentPage,
   totalPages,
+  isEditAction=false,
   onPageChange,
   onDelete,
   error,
@@ -219,10 +221,11 @@ const AppTable = ({
                         {" "}
                         <Trash className="h-4 w-4" />{" "}
                       </Button>
+                      {!isEditAction &&
                       <Button size="icon" variant="outline" className="h-8 w-8">
                         {" "}
                         <PencilLine className="h-4 w-4" />{" "}
-                      </Button>
+                      </Button>}
                     </div>
                   </TableCell>
                 )}
@@ -270,7 +273,6 @@ const AppTable = ({
           </TableRow>
         </TableFooter>
       </Table>
-      {/* Delete Confirmation Modal */}
       <Dialog open={isOpen} onOpenChange={close}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -51,10 +51,10 @@
 
 
 import Listing from '@/components/ui/core/Listing';
-import { useGetAllUsersQuery } from '@/store/services/dashboard/user';
+import { useDeleteUserMutation, useGetAllUsersQuery } from '@/store/services/dashboard/user';
 
 const UserListing = () => {
-    const columns = [
+  const columns = [
     { label: "id", className: "w-[80px]" },
     { label: "avatar", className: "w-[200px]" },
     { label: "name", className: "w-2" },
@@ -62,17 +62,21 @@ const UserListing = () => {
     { label: "password", className: "w-[200px]" },
     { label: "role", className: "w-[200px]" },
   ]
-  const {data,isLoading,error} =useGetAllUsersQuery();
-
+  const { data, isLoading } = useGetAllUsersQuery();
+  const [deleteProduct, { isLoading: deleteLoading, error: deleteError }] =
+  useDeleteUserMutation();
   return (
     <div>
-    <Listing
-    columns={columns}
-    data={data}
-    isLoading={isLoading}
-    error={error}
-    />
-  </div>
+      <Listing
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        onDelete={deleteProduct}
+        deleteLoading={deleteLoading}
+        error={deleteError}
+        isEditAction
+      />
+    </div>
   )
 }
 
