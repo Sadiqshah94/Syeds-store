@@ -12,7 +12,6 @@ import {
   storage,
   userProfile,
 } from "./index";
-import { loginuser } from "./services/auth/signin";
 import { allUsers } from "./services/dashboard/user";
 import { allProducts } from "./services/dashboard/products";
 import { allCategories } from "./services/dashboard/categories";
@@ -27,7 +26,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth:authReducer,
-  [loginuser.reducerPath]: registerUser.reducer,
   [registerUser.reducerPath]: registerUser.reducer,
   [userProfile.reducerPath]: userProfile.reducer,
   [allUsers.reducerPath]: allUsers.reducer,
